@@ -23,9 +23,12 @@ describe("Operaciones CRUD", () => {
     expect(body).toContainEqual(nuevoCafe);
   });
 
-  //   it("Obteniendo 400 al actualizar cafe con id desconocido", async () => {
-  //     const response = await request(server).put("/cafes/:id").send();
-  //     const status = response.statusCode;
-  //     expect(status).toBe(400);
-  //   });
+  it("Verificando producto que no existe", async () => {
+    const cafe = { id: 7, nombre: "Expresso" };
+    const { statusCode, body } = await request(server).put("/cafes").send(cafe);
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe(
+      "El id del parámetro no coincide con el id del café recibido"
+    );
+  });
 });
