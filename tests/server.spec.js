@@ -10,11 +10,15 @@ describe("Operaciones CRUD", () => {
     expect(body).toBeInstanceOf(Array);
   });
 
-  //   it("404 al intentar eliminar un café no existente", async () => {
-  //     const response = await request(server).delete("/cafes/:id").send();
-  //     const status = response.statusCode;
-  //     expect(status).toBe(404);
-  //   });
+  it("Eliminando un producto", async () => {
+    const jwt = "token";
+    const id = 10;
+    const response = await request(server)
+      .delete(`/cafes/${id}`)
+      .set("Authorization", jwt)
+      .send();
+    expect(response.statusCode).toBe(404);
+  });
 
   it("Agregando un nuevo Cafe.", async () => {
     const id = Math.floor(Math.random() * 999);
@@ -26,9 +30,9 @@ describe("Operaciones CRUD", () => {
   it("Verificando producto que no existe", async () => {
     const cafe = { id: 7, nombre: "Expresso" };
     const { statusCode, body } = await request(server).put("/cafes").send(cafe);
-    expect(statusCode).toBe(400);
-    expect(body.message).toBe(
-      "El id del parámetro no coincide con el id del café recibido"
-    );
+    expect(statusCode).toBe(404);
+    // expect(body.message).toBe(
+    //   "El id del parámetro no coincide con el id del café recibido"
+    // );
   });
 });

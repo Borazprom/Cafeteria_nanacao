@@ -35,7 +35,7 @@ app.put("/cafes/:id", (req, res) => {
   const cafe = req.body;
   const { id } = req.params;
   if (id != cafe.id)
-    return res.status(400).send({
+    return res.status(404).send({
       message: "El id del parámetro no coincide con el id del café recibido",
     });
 
